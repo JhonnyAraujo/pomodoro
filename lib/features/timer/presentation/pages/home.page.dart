@@ -20,7 +20,7 @@ class HomePage extends StatelessWidget {
                 Observer(
                   builder: (context) {
                     return Text(
-                      '${store.timer}',
+                      store.formattedTime,
                       style: TextStyle(fontSize: 80),
                     );
                   },

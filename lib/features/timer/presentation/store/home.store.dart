@@ -12,6 +12,17 @@ abstract class HomeStoreBase with Store {
   int _timer = 1500;
   int get timer => _timer;
 
+  @computed
+  String get formattedTime {
+    int min = _timer ~/ 60;
+    int sec = _timer % 60;
+
+    String minStr = min.toString().padLeft(2, '0');
+    String secStr = sec.toString().padLeft(2, '0');
+
+    return '$minStr:$secStr';
+  }
+
   @observable
   bool _isRunning = false;
   bool get isRunner => _isRunning;
