@@ -1,7 +1,5 @@
 import 'dart:async';
-
 import 'package:mobx/mobx.dart';
-
 part 'home.store.g.dart';
 
 class HomeStore = HomeStoreBase with _$HomeStore;
@@ -9,13 +7,32 @@ class HomeStore = HomeStoreBase with _$HomeStore;
 // The store-class
 abstract class HomeStoreBase with Store {
   @observable
-  int _timer = 1500;
-  int get timer => _timer;
+  int _studyTimer = 1500;
+  int get studyTimer => _studyTimer;
+
+  @observable
+  int _restTimer = 300;
+  int get restTimer => _restTimer;
+
+  @observable
+  bool _isRunning = false;
+  bool get isRunner => _isRunning;
+
+  @observable
+  bool _isStudyMode = true;
 
   @computed
   String get formattedTime {
-    int min = _timer ~/ 60;
-    int sec = _timer % 60;
+    int min = 0;
+    int sec = 0;
+
+    if (_isStudyMode) {
+      min = _studyTimer ~/ 60;
+      sec = _studyTimer % 60;
+    } else {
+      min = _restTimer ~/ 60;
+      sec = _restTimer % 60;
+    }
 
     String minStr = min.toString().padLeft(2, '0');
     String secStr = sec.toString().padLeft(2, '0');
@@ -23,30 +40,43 @@ abstract class HomeStoreBase with Store {
     return '$minStr:$secStr';
   }
 
-  @observable
-  bool _isRunning = false;
-  bool get isRunner => _isRunning;
-
   Timer? _relogio;
 
   @action
   void startTimer() {
-    _isRunning = true;
-
     if (_relogio != null && _relogio!.isActive) {
-      _relogio?.cancel();
+      _relogio!.cancel();
       _isRunning = false;
       return;
     }
 
-    _relogio = Timer.periodic(Duration(seconds: 1), (timer) {
-      _timer--;
+    _isRunning = true;
 
-      if (_timer <= 0) {
-        _relogio?.cancel();
-        _isRunning = false;
-        _timer = 1500;
-      }
-    });
+    if (_isStudyMode) {
+      _relogio = Timer.periodic(Duration(seconds: 1), (timer) {
+        _studyTimer--;
+
+        if (_studyTimer < 0) {
+          _isStudyMode = false;
+          _studyTimer = 1500;
+          _isRunning = false;
+          timer.cancel();
+        }
+      });
+    }
+
+    if (!_isStudyMode) {
+      _relogio = Timer.periodic(Duration(seconds: 1), (timer) {
+        _restTimer--;
+
+        if (_restTimer < 0) {
+          _relogio?.cancel();
+          _isStudyMode = true;
+          _restTimer = 300;
+          _isRunning = false;
+          timer.cancel();
+        }
+      });
+    }
   }
 }

@@ -17,21 +17,39 @@ mixin _$HomeStore on HomeStoreBase, Store {
     name: 'HomeStoreBase.formattedTime',
   )).value;
 
-  late final _$_timerAtom = Atom(
-    name: 'HomeStoreBase._timer',
+  late final _$_studyTimerAtom = Atom(
+    name: 'HomeStoreBase._studyTimer',
     context: context,
   );
 
   @override
-  int get _timer {
-    _$_timerAtom.reportRead();
-    return super._timer;
+  int get _studyTimer {
+    _$_studyTimerAtom.reportRead();
+    return super._studyTimer;
   }
 
   @override
-  set _timer(int value) {
-    _$_timerAtom.reportWrite(value, super._timer, () {
-      super._timer = value;
+  set _studyTimer(int value) {
+    _$_studyTimerAtom.reportWrite(value, super._studyTimer, () {
+      super._studyTimer = value;
+    });
+  }
+
+  late final _$_restTimerAtom = Atom(
+    name: 'HomeStoreBase._restTimer',
+    context: context,
+  );
+
+  @override
+  int get _restTimer {
+    _$_restTimerAtom.reportRead();
+    return super._restTimer;
+  }
+
+  @override
+  set _restTimer(int value) {
+    _$_restTimerAtom.reportWrite(value, super._restTimer, () {
+      super._restTimer = value;
     });
   }
 
@@ -50,6 +68,24 @@ mixin _$HomeStore on HomeStoreBase, Store {
   set _isRunning(bool value) {
     _$_isRunningAtom.reportWrite(value, super._isRunning, () {
       super._isRunning = value;
+    });
+  }
+
+  late final _$_isStudyModeAtom = Atom(
+    name: 'HomeStoreBase._isStudyMode',
+    context: context,
+  );
+
+  @override
+  bool get _isStudyMode {
+    _$_isStudyModeAtom.reportRead();
+    return super._isStudyMode;
+  }
+
+  @override
+  set _isStudyMode(bool value) {
+    _$_isStudyModeAtom.reportWrite(value, super._isStudyMode, () {
+      super._isStudyMode = value;
     });
   }
 
