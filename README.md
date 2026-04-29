@@ -13,3 +13,8 @@ Este projeto foi desenvolvido com as seguintes tecnologias e práticas:
 - **Linguagem:** [Dart](https://dart.dev/)
 - **Framework:** [Flutter](https://flutter.dev/)
 - **Gerenciamento de Estado:** [Mobx](https://pub.dev/packages/mobx)
+
+## ✨ Funcionalidades
+
+- **Ciclos Pomodoro:** Temporizador com 25 minutos para períodos de foco e 5 minutos para pausas de descanso.
+- **Controles do Temporizador:** Capacidade de iniciar, pausar a qualquer momento.
