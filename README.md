@@ -16,5 +16,5 @@ Este projeto foi desenvolvido com as seguintes tecnologias e práticas:
 
 ## ✨ Funcionalidades
 
-- **Ciclos Pomodoro:** Temporizador com 25 minutos para períodos de foco e 5 minutos para pausas de descanso.
+- **Ciclos Pomodoro:** Temporizador com 25 minutos para ciclos de foco, 5 minutos para pausas de descanso e a cada fim de ciclo toca um alarme para avisar ao usuário que o ciclo terminou.
 - **Controles do Temporizador:** Capacidade de iniciar, pausar a qualquer momento.
