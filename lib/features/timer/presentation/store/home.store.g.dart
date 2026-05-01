@@ -71,21 +71,21 @@ mixin _$HomeStore on HomeStoreBase, Store {
     });
   }
 
-  late final _$_isfocusModeAtom = Atom(
-    name: 'HomeStoreBase._isfocusMode',
+  late final _$_isFocusModeAtom = Atom(
+    name: 'HomeStoreBase._isFocusMode',
     context: context,
   );
 
   @override
-  bool get _isfocusMode {
-    _$_isfocusModeAtom.reportRead();
-    return super._isfocusMode;
+  bool get _isFocusMode {
+    _$_isFocusModeAtom.reportRead();
+    return super._isFocusMode;
   }
 
   @override
-  set _isfocusMode(bool value) {
-    _$_isfocusModeAtom.reportWrite(value, super._isfocusMode, () {
-      super._isfocusMode = value;
+  set _isFocusMode(bool value) {
+    _$_isFocusModeAtom.reportWrite(value, super._isFocusMode, () {
+      super._isFocusMode = value;
     });
   }
 

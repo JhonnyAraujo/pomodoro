@@ -20,14 +20,14 @@ abstract class HomeStoreBase with Store {
   bool get isRunner => _isRunning;
 
   @observable
-  bool _isfocusMode = true;
+  bool _isFocusMode = true;
 
   @computed
   String get formattedTime {
     int min = 0;
     int sec = 0;
 
-    if (_isfocusMode) {
+    if (_isFocusMode) {
       min = _focusTimer ~/ 60;
       sec = _focusTimer % 60;
     } else {
@@ -53,9 +53,9 @@ abstract class HomeStoreBase with Store {
 
     _isRunning = true;
 
-    if (_isfocusMode) {
+    if (_isFocusMode) {
       _relogio = Timer.periodic(const Duration(seconds: 1), (timer) {
-        _focusTimer -= 300;
+        _focusTimer--;
 
         if (_focusTimer < 0) {
           FlutterRingtonePlayer().playAlarm();
@@ -63,7 +63,7 @@ abstract class HomeStoreBase with Store {
             FlutterRingtonePlayer().stop();
           });
 
-          _isfocusMode = false;
+          _isFocusMode = false;
           _focusTimer = 1500;
           _isRunning = false;
           timer.cancel();
@@ -71,7 +71,7 @@ abstract class HomeStoreBase with Store {
       });
     }
 
-    if (!_isfocusMode) {
+    if (!_isFocusMode) {
       _relogio = Timer.periodic(const Duration(seconds: 1), (timer) {
         _restTimer--;
 
@@ -82,7 +82,7 @@ abstract class HomeStoreBase with Store {
           });
 
           _relogio?.cancel();
-          _isfocusMode = true;
+          _isFocusMode = true;
           _restTimer = 300;
           _isRunning = false;
           timer.cancel();
@@ -97,5 +97,10 @@ abstract class HomeStoreBase with Store {
     _isRunning = false;
     _focusTimer = 1500;
     _restTimer = 300;
+  }
+
+  @action
+  void nextTimer() {
+    _isFocusMode ? _focusTimer -= 1500 : _restTimer -= 300;
   }
 }
