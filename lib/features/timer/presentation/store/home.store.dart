@@ -8,8 +8,8 @@ class HomeStore = HomeStoreBase with _$HomeStore;
 // The store-class
 abstract class HomeStoreBase with Store {
   @observable
-  int _studyTimer = 1500;
-  int get studyTimer => _studyTimer;
+  int _focusTimer = 1500;
+  int get focusTimer => _focusTimer;
 
   @observable
   int _restTimer = 300;
@@ -20,16 +20,16 @@ abstract class HomeStoreBase with Store {
   bool get isRunner => _isRunning;
 
   @observable
-  bool _isStudyMode = true;
+  bool _isfocusMode = true;
 
   @computed
   String get formattedTime {
     int min = 0;
     int sec = 0;
 
-    if (_isStudyMode) {
-      min = _studyTimer ~/ 60;
-      sec = _studyTimer % 60;
+    if (_isfocusMode) {
+      min = _focusTimer ~/ 60;
+      sec = _focusTimer % 60;
     } else {
       min = _restTimer ~/ 60;
       sec = _restTimer % 60;
@@ -53,41 +53,49 @@ abstract class HomeStoreBase with Store {
 
     _isRunning = true;
 
-    if (_isStudyMode) {
-      _relogio = Timer.periodic(Duration(seconds: 1), (timer) {
-        _studyTimer--;
+    if (_isfocusMode) {
+      _relogio = Timer.periodic(const Duration(seconds: 1), (timer) {
+        _focusTimer -= 300;
 
-        if (_studyTimer < 0) {
+        if (_focusTimer < 0) {
           FlutterRingtonePlayer().playAlarm();
-          Future.delayed(Duration(seconds: 6), () {
+          Future.delayed(const Duration(seconds: 6), () {
             FlutterRingtonePlayer().stop();
           });
 
-          _isStudyMode = false;
-          _studyTimer = 1500;
+          _isfocusMode = false;
+          _focusTimer = 1500;
           _isRunning = false;
           timer.cancel();
         }
       });
     }
 
-    if (!_isStudyMode) {
-      _relogio = Timer.periodic(Duration(seconds: 1), (timer) {
+    if (!_isfocusMode) {
+      _relogio = Timer.periodic(const Duration(seconds: 1), (timer) {
         _restTimer--;
 
         if (_restTimer < 0) {
           FlutterRingtonePlayer().playAlarm();
-          Future.delayed(Duration(seconds: 6), () {
+          Future.delayed(const Duration(seconds: 6), () {
             FlutterRingtonePlayer().stop();
           });
 
           _relogio?.cancel();
-          _isStudyMode = true;
+          _isfocusMode = true;
           _restTimer = 300;
           _isRunning = false;
           timer.cancel();
         }
       });
     }
+  }
+
+  @action
+  void resetTimer() {
+    _relogio?.cancel();
+    _isRunning = false;
+    _focusTimer = 1500;
+    _restTimer = 300;
   }
 }

@@ -30,7 +30,9 @@ class HomePage extends StatelessWidget {
                   spacing: 20,
                   children: [
                     IconButton.filledTonal(
-                      onPressed: () {},
+                      onPressed: () {
+                        store.resetTimer();
+                      },
                       icon: const Icon(Icons.restart_alt),
                     ),
                     Observer(

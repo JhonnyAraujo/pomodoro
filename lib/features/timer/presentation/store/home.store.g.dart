@@ -17,21 +17,21 @@ mixin _$HomeStore on HomeStoreBase, Store {
     name: 'HomeStoreBase.formattedTime',
   )).value;
 
-  late final _$_studyTimerAtom = Atom(
-    name: 'HomeStoreBase._studyTimer',
+  late final _$_focusTimerAtom = Atom(
+    name: 'HomeStoreBase._focusTimer',
     context: context,
   );
 
   @override
-  int get _studyTimer {
-    _$_studyTimerAtom.reportRead();
-    return super._studyTimer;
+  int get _focusTimer {
+    _$_focusTimerAtom.reportRead();
+    return super._focusTimer;
   }
 
   @override
-  set _studyTimer(int value) {
-    _$_studyTimerAtom.reportWrite(value, super._studyTimer, () {
-      super._studyTimer = value;
+  set _focusTimer(int value) {
+    _$_focusTimerAtom.reportWrite(value, super._focusTimer, () {
+      super._focusTimer = value;
     });
   }
 
@@ -71,21 +71,21 @@ mixin _$HomeStore on HomeStoreBase, Store {
     });
   }
 
-  late final _$_isStudyModeAtom = Atom(
-    name: 'HomeStoreBase._isStudyMode',
+  late final _$_isfocusModeAtom = Atom(
+    name: 'HomeStoreBase._isfocusMode',
     context: context,
   );
 
   @override
-  bool get _isStudyMode {
-    _$_isStudyModeAtom.reportRead();
-    return super._isStudyMode;
+  bool get _isfocusMode {
+    _$_isfocusModeAtom.reportRead();
+    return super._isfocusMode;
   }
 
   @override
-  set _isStudyMode(bool value) {
-    _$_isStudyModeAtom.reportWrite(value, super._isStudyMode, () {
-      super._isStudyMode = value;
+  set _isfocusMode(bool value) {
+    _$_isfocusModeAtom.reportWrite(value, super._isfocusMode, () {
+      super._isfocusMode = value;
     });
   }
 
@@ -101,6 +101,18 @@ mixin _$HomeStore on HomeStoreBase, Store {
     );
     try {
       return super.startTimer();
+    } finally {
+      _$HomeStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void resetTimer() {
+    final _$actionInfo = _$HomeStoreBaseActionController.startAction(
+      name: 'HomeStoreBase.resetTimer',
+    );
+    try {
+      return super.resetTimer();
     } finally {
       _$HomeStoreBaseActionController.endAction(_$actionInfo);
     }
